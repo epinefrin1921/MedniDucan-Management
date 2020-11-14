@@ -1,0 +1,9 @@
+<% layout('/layouts/boilerplate') %>
+
+<p>
+    <%= order %>
+</p>
+
+<form action="/orders/<%= order._id %>?_method=DELETE" method="POST">
+    <input type="submit" value="Izbrisi order">
+</form>

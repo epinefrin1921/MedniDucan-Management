@@ -1,0 +1,11 @@
+<% layout('/layouts/boilerplate') %>
+
+<p>
+    <%= product %>
+</p>
+
+<a href="/products/<%= product._id %>/edit">Uredi</a>
+
+<form action="/products/<%= product._id %>?_method=DELETE" method="POST">
+    <input type="submit" value="Izbrisi proizvod">
+</form>

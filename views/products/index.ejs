@@ -1,0 +1,9 @@
+<% layout('/layouts/boilerplate') %>
+
+<h1>Svi proizvodi</h1>
+
+<% for(let product of products){ %>
+<p> <%= product.name %>- <%= product.price %> <a href="/products/<%= product._id %> ">Pogledaj</a> </p>
+
+<% } %>
+<a href="/products/new">Dodaj novi proizvod</a>
