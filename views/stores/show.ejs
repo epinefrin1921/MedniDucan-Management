@@ -1,11 +1,71 @@
 <% layout('/layouts/boilerplate') %>
 
-<p>
-    <%= store %>
-</p>
 
-<a href="/stores/<%= store._id %>/edit">Uredi</a>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <% store.images.forEach((img, i) => {  %>
+                <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                    <img src="<%= img.url%>" class="d-block w-100" alt="">
+                </div>
+                <% }) %>
+            </div>
+            <% if(store.images.length > 1) {%>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+            <% } %>
+        </div>
 
-<form action="/stores/<%= store._id %>?_method=DELETE" method="POST">
-    <input type="submit" value="Izbrisi radnju">
-</form>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><%= store.name%></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-muted"><%= store.location%></li>
+
+            </ul>
+            <%  if( currentUser )  {%>
+            <div class="card-body">
+                <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales/new">Nova prodaja</a>
+                <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales">Sve prodaje</a>
+                <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/edit">Uredi</a>
+                <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/addproducts">Dodaj proizvod</a>
+                <form class="d-inlineblock mt-1" action="/stores/<%=store._id%>?_method=DELETE" method="POST">
+                    <button class="card-link btn btn-danger">Izbrisi</button>
+                </form>
+            </div>
+            <% } %>
+            <div class="card-footer text-muted">
+                info
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6" id='map'></div>
+</div>
+
+<div class="card text-center mt-5 mb-5">
+    <h2>Stanje u radnji</h2>
+    <ul class="list-group">
+        <% for(let product of store.products){ %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/products/<%= product.productId._id %>"><%= product.productId.name %></a>
+            <% let stanje = product.quantity<3? 'danger':'warning'; if(product.quantity>6) stanje='info' ;%>
+            <span class="badge bg-<%= stanje %> rounded-pill">Na stanju:
+                <%= product.quantity %></span>
+        </li>
+        <% } %>
+    </ul>
+</div>
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const store = <%- JSON.stringify(store) %>
+</script>
+<script src="/js/showPageMap.js"></script>

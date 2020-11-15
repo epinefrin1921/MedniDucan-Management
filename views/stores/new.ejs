@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center">Nova radnja</h1>
     <div class="col-md-6 offset-md-3">
-        <form action="/stores" method="POST" novalidate class="validated-form">
+        <form action="/stores" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="naziv">Naziv</label>
                 <input class="form-control" autofocus type="text" id="naziv" name="store[name]" required
@@ -40,7 +40,7 @@
                 <div class="valid-feedback">
                     Izgleda dobro!
                 </div>
-            </div>
+            </div>-->
             <div class="mb-3">
                 <div class="form-file custom-file">
                     <input type="file" class="form-file-input" id="image" name="image" multiple>
@@ -49,7 +49,7 @@
                         <span class="form-file-button">Browse</span>
                     </label>
                 </div>
-            </div> -->
+            </div>
             <div class="mb-3">
                 <button class="btn btn-success">Dodaj radnju</button>
             </div>

@@ -1,0 +1,35 @@
+<% layout('/layouts/boilerplate') %>
+
+<% let total = 0; %>
+<div class="row">
+
+    <h5 class="card-title">Prodaja <%= sale._id %> iz radnje <%= store.name%></h5>
+
+    <div class="col-12">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <p>Prodaja ID: <%= sale._id %></p>
+                <p><%= sale.date.getHours() %>:<%= sale.date.getMinutes() %>
+                    <%= sale.date.getDate() %> <%= sale.date.toLocaleString('default', { month: 'long' }); %>
+                    <%= sale.date.getFullYear() %>
+                </p>
+                <span class="badge bg-primary rounded-pill">Prodao: <%= sale.author.username %> </span>
+            </li>
+        </ul>
+    </div>
+    <h3 class="mt-5">Prodani proizvodi:</h3>
+    <% for(let item of sale.products){ %>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/products/<%= item.productId._id %>"><%= item.productId.name %> </a>
+            <p>Kolicina: <%= item.quantity %></p>
+            <p>Ukupna cijena:
+                <%= parseInt(item.productId.price)*parseInt(item.quantity) %> </p>
+            <% total = total + parseInt(item.productId.price)*parseInt(item.quantity); %>
+        </li>
+    </ul>
+    <% } %>
+    <h3>Ukupna cijena: <%= total %></h3>
+    <a class="mb-5 mt-5" href="/stores/<%= store._id %>/sales">Vrati se na prodaje iz radnje <%= store.name%></a>
+
+</div>

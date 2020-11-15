@@ -1,4 +1,6 @@
 const Product = require('../models/products');
+const Store = require('../models/stores');
+const { func } = require('joi');
 
 module.exports.index = async (req, res) => {
     const products = await Product.find({});
@@ -16,7 +18,9 @@ module.exports.renderNewForm = async (req, res) => {
 
 module.exports.showProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
-    res.render('products/show', { product });
+    const stores = await Store.find().populate('products.productId');
+
+    res.render('products/show', { product, stores });
 }
 
 module.exports.updateProduct = async (req, res) => {

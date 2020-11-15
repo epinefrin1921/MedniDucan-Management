@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Product = require('./products');
-const { func } = require('joi');
+const Sales = require('./sales');
+
 
 const ImageSchema = new Schema({
     url: String,
@@ -12,21 +12,20 @@ ImageSchema.virtual('thumbnail').get(function () {
 });
 const opts = { toJSON: { virtuals: true } };
 
-
 const storeSchema = new Schema({
     name: String,
     location: String,
-    // geometry: {
-    //     type: {
-    //         type: String,
-    //         enum: ['Point'],
-    //         required: true
-    //     },
-    //     coordinates: {
-    //         type: [Number],
-    //         required: true
-    //     }
-    // },
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     products: [
         {
             productId: {
@@ -44,6 +43,14 @@ const storeSchema = new Schema({
 
 storeSchema.virtual('properties.popUpMarkup').get(function () {
     return `<strong><a href="/campgrounds/${this._id}">${this.name}</a><strong>`;
+})
+
+storeSchema.post('findOneAndDelete', async function (doc) {
+    if (doc) {
+        await Sales.deleteMany({
+            store: doc._id
+        })
+    }
 })
 
 module.exports = mongoose.model('Store', storeSchema);

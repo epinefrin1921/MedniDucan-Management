@@ -2,8 +2,19 @@
 
 <h1>Svi proizvodi</h1>
 
-<% for(let product of products){ %>
-<p> <%= product.name %>- <%= product.price %> <a href="/products/<%= product._id %> ">Pogledaj</a> </p>
+<div class="card text-center mt-5 mb-5">
 
-<% } %>
+    <h2>Stanje po radnjama</h2>
+    <ul class="list-group">
+        <% for(let product of products){ %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= product.name %> - <%= product.price %>KM
+            <span class="badge">
+                <a class="btn btn-primary" href="/products/<%= product._id %> ">Pogledaj</a>
+            </span>
+        </li>
+        <% } %>
+    </ul>
+</div>
+
 <a href="/products/new">Dodaj novi proizvod</a>

@@ -1,20 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const stores = require('../controllers/stores');
+const catchAsync = require('../utils/catchAsync');
+const multer = require('multer')
+const { storage } = require('../cloudinary/index');
+const upload = multer({ storage });
 
-const { validateStore } = require('../middleware');
+const { validateStore, isAdmin, isLoggedIn } = require('../middleware');
 
 router.route('/')
-    .get(stores.index)
-    .post(validateStore, stores.createStore);
+    .get(catchAsync(stores.index))
+    .post(isLoggedIn, isAdmin, upload.array('image'), validateStore, catchAsync(stores.createStore));
 
-router.get("/new", stores.renderNewForm);
+router.get("/new", isAdmin, stores.renderNewForm);
 
 router.route('/:id')
-    .get(stores.showStore)
-    .put(validateStore, stores.updateStore)
-    .delete(stores.deleteStore)
+    .get(catchAsync(stores.showStore))
+    .put(isLoggedIn, isAdmin, upload.array('image'), validateStore, catchAsync(stores.updateStore))
+    .delete(isAdmin, catchAsync(stores.deleteStore))
 
-router.get("/:id/edit", stores.renderEditForm)
+router.get("/:id/edit", isAdmin, stores.renderEditForm)
 
+router.route("/:id/addproducts")
+    .get(isAdmin, catchAsync(stores.renderAddProductForm))
+    .put(isAdmin, catchAsync(stores.addProduct))
+
+router.route("/:id/sales/new")
+    .get(catchAsync(stores.renderSaleForm))
+
+router.route("/:id/sales")
+    .get(catchAsync(stores.salesIndex))
+    .put(catchAsync(stores.addSale))
+
+router.route("/:id/sales/:saleId")
+    .get(catchAsync(stores.singleSale))
 module.exports = router;

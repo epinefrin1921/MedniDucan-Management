@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="row">
+    <h3 class="text-center">Nova prodaja u <%= store.name %></h3>
+    <div class="col-md-6 offset-md-3">
+
+        <form action="/stores/<%= store._id %>/sales?_method=PUT" method="POST" novalidate class="validated-form">
+
+            <% for(let product of store.products){ %>
+            <div class="mb-3 form-group row">
+                <label class="col-sm-6 col-form-label"
+                    for="qty-<%= product.productId._id%>"><%= product.productId.name %>
+                    <span class="text-muted">
+                        Na stanju: <%= product.quantity  %>
+                    </span> </label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" id="qty-<%= product.productId._id%>"
+                        placeholder="Unesi kolicinu" name="product[<%= product.productId._id %>]">
+                </div>
+            </div>
+            <% } %>
+
+            <div class="mb-3">
+                <label class="form-label" for="napomena">Neka posebna napomena</label>
+                <textarea class="form-control" type="text" id="napomena" name="napomena"></textarea>
+                <div class="valid-feedback">
+                    Izgleda dobro!
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-success">Spremi prodaju</button>
+            </div>
+        </form>
+
+        <a href="/stores/<%= store._id %>">Vrati se na radnju</a>
+    </div>
+</div>
