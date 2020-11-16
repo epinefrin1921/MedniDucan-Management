@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const { transferIndex } = require('../controllers/stores');
 const Schema = mongoose.Schema;
 const Sales = require('./sales');
 
+const Transfer = require('./transfers');
 
 const ImageSchema = new Schema({
     url: String,
@@ -15,6 +17,11 @@ const opts = { toJSON: { virtuals: true } };
 const storeSchema = new Schema({
     name: String,
     location: String,
+    storeType: {
+        type: String,
+        enum: ['warehouse', 'store'],
+        required: true
+    },
     geometry: {
         type: {
             type: String,
@@ -42,14 +49,17 @@ const storeSchema = new Schema({
 }, opts);
 
 storeSchema.virtual('properties.popUpMarkup').get(function () {
-    return `<strong><a href="/campgrounds/${this._id}">${this.name}</a><strong>`;
+    return `<strong><a href="/stores/${this._id}">${this.name}</a><strong>`;
 })
 
 storeSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
         await Sales.deleteMany({
             store: doc._id
-        })
+        });
+        await Transfer.deleteMany({
+            storeFrom: doc._id
+        });
     }
 })
 

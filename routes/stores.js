@@ -25,13 +25,30 @@ router.route("/:id/addproducts")
     .get(isAdmin, catchAsync(stores.renderAddProductForm))
     .put(isAdmin, catchAsync(stores.addProduct))
 
+
+
 router.route("/:id/sales/new")
-    .get(catchAsync(stores.renderSaleForm))
+    .get(isLoggedIn, catchAsync(stores.renderSaleForm))
 
 router.route("/:id/sales")
-    .get(catchAsync(stores.salesIndex))
-    .put(catchAsync(stores.addSale))
+    .get(isLoggedIn, catchAsync(stores.salesIndex))
+    .put(isLoggedIn, catchAsync(stores.addSale))
 
 router.route("/:id/sales/:saleId")
-    .get(catchAsync(stores.singleSale))
+    .get(isLoggedIn, catchAsync(stores.singleSale))
+
+
+
+router.route("/:id/transfers/new")
+    .get(isAdmin, isLoggedIn, catchAsync(stores.renderTransferForm))
+
+router.route("/:id/transfers")
+    .get(isAdmin, isLoggedIn, catchAsync(stores.transferIndex))
+    .put(isAdmin, isLoggedIn, catchAsync(stores.addTransfer))
+
+router.route("/:id/transfers/:transferId")
+    .get(isAdmin, isLoggedIn, catchAsync(stores.singleTransfer))
+
+
+
 module.exports = router;

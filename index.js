@@ -25,6 +25,7 @@ const userRoutes = require('./routes/users')
 const orderRoutes = require('./routes/orders')
 const productRoutes = require('./routes/products')
 const salesRoutes = require('./routes/sales')
+const Store = require('./models/stores');
 
 
 dbUrl = 'mongodb://localhost:27017/medniDucan';
@@ -149,6 +150,10 @@ app.use('/sales', isLoggedIn, salesRoutes);
 
 app.get("/", function (req, res) {
   res.render('home.ejs');
+})
+app.get("/map", async (req, res) => {
+  const stores = await Store.find({})
+  res.render('map.ejs', { stores });
 })
 
 app.all('*', (req, res, next) => {

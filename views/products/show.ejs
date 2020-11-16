@@ -3,19 +3,21 @@
 
 <div class="card text-center">
     <div class="card-header">
-        Pojedinacni proizvod %>
+        Pojedinačni proizvod %>
     </div>
     <div class="card-body">
         <h2 class="card-title"><%= product.name %></h2>
         <p class="card-text"><%= product.price %>KM po komadu</p>
+        <% if(currentUser.isAdmin){ %>
         <a class="btn btn-info" href="/products/<%= product._id %>/edit">Uredi</a>
         <form style="display: inline-block;" action="/products/<%= product._id %>?_method=DELETE" method="POST">
             <input class="btn btn-danger" type="submit" value="Izbrisi proizvod">
         </form>
+        <% } %>
+
     </div>
     <div class="card-footer text-muted">
-        2 days ago
-    </div>
+        info </div>
 </div>
 <div class="card text-center mt-5 mb-5">
     <h2>Stanje po radnjama</h2>
@@ -23,12 +25,13 @@
         <% for(let store of stores){ %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/stores/<%= store._id %>"><%= store.name %></a>
-            <span class="badge bg-primary rounded-pill">
-                <% for(let item of store.products){ %>
-                <% if(item.productId._id.equals(product._id)){ %>
+            <% for(let item of store.products){ %>
+            <% if(item.productId._id.equals(product._id)){ %>
+            <% let stanje = item.quantity<3? 'danger':'warning'; if(item.quantity>6) stanje='info' ;%>
+            <span class="badge bg-<%= stanje %> rounded-pill">
                 <%=  item.quantity%>
-                <% }} %>
             </span>
+            <% }} %>
         </li>
         <% } %>
     </ul>

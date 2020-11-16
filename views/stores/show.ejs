@@ -33,17 +33,26 @@
             </ul>
             <%  if( currentUser )  {%>
             <div class="card-body">
+                <% if(store.storeType==='store'){ %>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales/new">Nova prodaja</a>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales">Sve prodaje</a>
+                <% } else if(store.storeType==='warehouse' && currentUser.isAdmin){ %>
+                <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/transfers/new">Novi prenos
+                    proizvoda</a>
+                <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/transfers">Svi prenosi proizvoda</a>
+                <% } %>
+                <% if(currentUser.isAdmin){ %>
+
                 <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/edit">Uredi</a>
-                <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/addproducts">Dodaj proizvod</a>
+                <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/addproducts">Dodaj proizvode</a>
                 <form class="d-inlineblock mt-1" action="/stores/<%=store._id%>?_method=DELETE" method="POST">
-                    <button class="card-link btn btn-danger">Izbrisi</button>
+                    <button class="card-link btn btn-danger">Izbriši</button>
                 </form>
+                <% } %>
             </div>
             <% } %>
-            <div class="card-footer text-muted">
-                info
+            <div class="card-footer text-muted text-center">
+                <%= store.storeType %>
             </div>
         </div>
     </div>
@@ -51,7 +60,7 @@
 </div>
 
 <div class="card text-center mt-5 mb-5">
-    <h2>Stanje u radnji</h2>
+    <h2>Stanje u <%= store.storeType==='store'? 'radnji': 'skladištu' %> </h2>
     <ul class="list-group">
         <% for(let product of store.products){ %>
         <li class="list-group-item d-flex justify-content-between align-items-center">

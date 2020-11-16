@@ -1,8 +1,24 @@
 <% layout('/layouts/boilerplate') %>
-<h1>Sve narudzbe</h1>
 
-<% for(let order of orders){ %>
-<p> <%= order.name %>- <%= order.price %> <a href="/orders/<%= order._id %> ">Pogledaj</a> </p>
 
-<% } %>
-<a href="/orders/new">Dodaj novi order</a>
+<div class="row mb-3 ">
+    <h2>
+        <h2 class="card-title">Sve narudžbe</h2>
+    </h2>
+    <div class="col-12">
+        <ul class="list-group">
+            <% for(let order of orders){ %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <p>Naručio: <%= order.author.username %></p>
+                <p> <%= order.store.name %> -
+                    <%= order.dateDeliver.getDate() %>.<%= order.dateDeliver.getMonth()+1 %>.<%= order.dateDeliver.getFullYear() %>
+                </p>
+                <span class="badge bg-dark rounded-pill p-3">
+                    <a href="/orders/<%= order._id %> " style="color: white; text-decoration: none;">Pogledaj</a>
+                </span>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</div>
+<a class="mb-3 mt-3" href="/orders/new">Dodaj novu narudžbu</a>

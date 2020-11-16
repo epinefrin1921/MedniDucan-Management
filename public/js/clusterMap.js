@@ -2,8 +2,8 @@ mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
     container: 'cluster-map',
     style: 'mapbox://styles/mapbox/dark-v10',
-    center: [18.267891, 43.960220],
-    zoom: 9
+    center: [18.18139, 43.991883],
+    zoom: 13
 });
 
 map.addControl(new mapboxgl.NavigationControl())
@@ -19,7 +19,7 @@ map.on('load', function () {
         data:
             stores,
         cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterMaxZoom: 20, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     });
 

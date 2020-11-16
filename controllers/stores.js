@@ -1,6 +1,7 @@
 const Store = require('../models/stores');
 const Product = require('../models/products');
 const Sale = require('../models/sales');
+const Transfer = require('../models/transfers');
 
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const mapBoxToken = process.env.MAPBOX_TOKEN;
@@ -160,4 +161,79 @@ module.exports.singleSale = async (req, res) => {
     const store = await Store.findById(req.params.id);
     const sale = await Sale.findById(req.params.saleId).populate('products.productId').populate('author');
     res.render(`stores/sale`, { sale, store });
+}
+
+
+module.exports.renderTransferForm = async (req, res) => {
+    const store = await Store.findById(req.params.id).populate('products.productId');
+    const allStores = await Store.find({});
+    if (!store) {
+        req.flash('error', 'Ne mogu naci tu radnju!');
+        return res.redirect('/stores')
+    }
+    res.render(`stores/transfer`, { store, allStores });
+};
+
+module.exports.addTransfer = async (req, res) => {
+    const storeFrom = await Store.findById(req.params.id);
+    const storeTo = await Store.findById(req.body.radnja);
+    const transfer = new Transfer();
+    transfer.storeFrom = storeFrom._id;
+    transfer.storeTo = storeTo._id;
+    transfer.napomena = req.body.napomena;
+    transfer.date = Date.now();
+    const trenutnoRadnjaFrom = storeFrom.products;
+    const trenutnoRadnjaTo = storeTo.products;
+
+    for (let item in req.body.product) {
+        if (req.body.product[item] > 0) {
+            let transferLine = {
+                productId: item,
+                quantity: req.body.product[item]
+            }
+            transfer.products.push(transferLine); //dodaje u transfer
+
+            for (let prod of trenutnoRadnjaFrom) {  //izbacuje iz skladista
+                if (prod.productId.equals(item)) {
+                    prod.quantity = parseInt(prod.quantity) - parseInt(req.body.product[item]);
+                }
+            }
+
+            let dodan = false;                      //ubacuje u novo skladiste ili radnju
+            for (let prod of trenutnoRadnjaTo) {
+                if (prod.productId.equals(item) && req.body.product[item] > 0) {
+                    prod.quantity = parseInt(prod.quantity) + parseInt(req.body.product[item]);
+                    dodan = true;
+                }
+            }
+
+            if (req.body.product[item] > 0 && !dodan) {
+                const proizvod = {
+                    productId: item,
+                    quantity: req.body.product[item]
+                }
+                trenutnoRadnjaTo.push(proizvod)
+            }
+        }
+    }
+    await storeFrom.save();
+    await storeTo.save();
+    transfer.author = req.user._id;
+    await transfer.save();
+    res.redirect(`/stores/${req.params.id}/transfers`);
+}
+
+module.exports.transferIndex = async (req, res) => {
+    const store = await Store.findById(req.params.id);
+
+    const transfers = await Transfer.find({ storeFrom: req.params.id })
+        .populate('products.productId').populate('author').populate('storeTo').populate('storeFrom');
+
+    res.render(`stores/storeTransfers`, { transfers, store });
+}
+module.exports.singleTransfer = async (req, res) => {
+    const store = await Store.findById(req.params.id);
+    const transfer = await Transfer.findById(req.params.transferId)
+        .populate('products.productId').populate('author').populate('storeTo').populate('storeFrom');
+    res.render(`stores/singleTransfer`, { transfer, store });
 }

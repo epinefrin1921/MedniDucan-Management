@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const orderSchema = new Schema({
-    store: {
+const transferSchema = new Schema({
+    storeFrom: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Store"
 
     },
-    dateMade: {
-        type: Date,
-        required: true
+    storeTo: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Store"
     },
-    dateDeliver: {
+    date: {
         type: Date,
         required: true
     },
@@ -35,4 +36,4 @@ const orderSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('Transfer', transferSchema);

@@ -3,16 +3,16 @@ const router = express.Router();
 const orders = require('../controllers/orders');
 const catchAsync = require('../utils/catchAsync');
 
-const { validateOrder } = require('../middleware');
+const { isAdmin } = require('../middleware');
 
 router.route('/')
     .get(catchAsync(orders.index))
-    .post(validateOrder, catchAsync(orders.createOrder))
+    .post(catchAsync(orders.createOrder))
 
 router.get("/new", orders.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(orders.showOrder))
-    .delete(catchAsync(orders.deleteOrder))
+    .delete(isAdmin, catchAsync(orders.deleteOrder))
 
 module.exports = router;
