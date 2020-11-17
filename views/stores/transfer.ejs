@@ -27,7 +27,8 @@
                     </span> </label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" id="qty-<%= product.productId._id%>"
-                        placeholder="Unesi količinu" name="product[<%= product.productId._id %>]">
+                        placeholder="Unesi količinu" max="<%= product.quantity  %>"
+                        name="product[<%= product.productId._id %>]">
                 </div>
             </div>
             <% }} %>

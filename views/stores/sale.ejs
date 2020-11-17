@@ -24,8 +24,8 @@
             <a href="/products/<%= item.productId._id %>"><%= item.productId.name %> </a>
             <p>Količina: <%= item.quantity %></p>
             <p>Ukupna cijena:
-                <%= parseInt(item.productId.price)*parseInt(item.quantity) %>KM </p>
-            <% total = total + parseInt(item.productId.price)*parseInt(item.quantity); %>
+                <%= parseInt(item.price)*parseInt(item.quantity) %>KM </p>
+            <% total = total + parseInt(item.price)*parseInt(item.quantity); %>
         </li>
     </ul>
     <% } %>

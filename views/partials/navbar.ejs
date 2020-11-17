@@ -7,7 +7,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
                 <a class="nav-link" href="/stores">Radnje</a>
                 <a class="nav-link" href="/map">Mapa radnji</a>
                 <a class="nav-link" href="/products">Proizvodi</a>
@@ -20,7 +19,9 @@
                 <% }else{ %>
                 <a class="nav-link" href="">Welcome, <%= currentUser.username  %> </a>
                 <a class="nav-link" href="/logout">Logout</a>
+                <% if(currentUser.isAdmin){ %>
                 <a class="nav-link" href="/register">Register new User</a>
+                <% } %>
                 <% } %>
             </div>
         </div>

@@ -133,9 +133,11 @@ module.exports.addSale = async (req, res) => {
 
     for (let item in req.body.product) {
         if (req.body.product[item] > 0) {
+            const produce = await Product.findById(item);
             let saleLine = {
                 productId: item,
-                quantity: req.body.product[item]
+                quantity: req.body.product[item],
+                price: produce.price
             }
             sale.products.push(saleLine);
             for (let prod of trenutnoRadnja) {
