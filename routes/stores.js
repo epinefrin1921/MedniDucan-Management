@@ -34,6 +34,10 @@ router.route("/:id/sales")
     .get(isLoggedIn, catchAsync(stores.salesIndex))
     .put(isLoggedIn, catchAsync(stores.addSale))
 
+router.route("/:id/sales/date")
+    .get(isLoggedIn, catchAsync(stores.pickDate))
+    .post(isLoggedIn, catchAsync(stores.renderSaleDate));
+
 router.route("/:id/sales/:saleId")
     .get(isLoggedIn, catchAsync(stores.singleSale))
 
@@ -48,6 +52,7 @@ router.route("/:id/transfers")
 
 router.route("/:id/transfers/:transferId")
     .get(isAdmin, isLoggedIn, catchAsync(stores.singleTransfer))
+
 
 
 

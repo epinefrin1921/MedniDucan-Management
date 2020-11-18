@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') %>
 
 <div class="row">
-    <h1 class="text-center">Dodaj narudzbu</h1>
+    <h1 class="text-center">Dodaj narudžbu</h1>
     <div class="col-md-6 offset-md-3">
         <form action="/orders" method="POST" novalidate class="validated-form">
 
@@ -23,14 +23,14 @@
                         Cijena: <%= product.price  %>
                     </span> </label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" id="qty-<%= product._id%>" placeholder="Unesi kolicinu"
+                    <input type="number" class="form-control" id="qty-<%= product._id%>" placeholder="Unesi količinu"
                         name="product[<%= product._id %>]">
                 </div>
             </div>
             <% } %>
 
             <div class="mb-3">
-                <label class="form-label" for="date">Datum narudzbe</label>
+                <label class="form-label" for="date">Datum narudžbe</label>
                 <input class="form-control" type="date" id="date" name="date">
                 <div class="valid-feedback">
                     Izgleda dobro!
@@ -46,9 +46,9 @@
             </div>
 
             <div class="mb-3">
-                <button class="btn btn-success">Dodaj narudzbu</button>
+                <button class="btn btn-success">Dodaj narudžbu</button>
             </div>
         </form>
-        <a href="/orders">Vrati se na narudzbe</a>
+        <a href="/orders">Vrati se na narudžbe</a>
     </div>
 </div>

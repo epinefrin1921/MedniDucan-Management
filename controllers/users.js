@@ -15,7 +15,7 @@ module.exports.register = async (req, res, next) => {
         //         return next(err);
         //     }
         // });
-        req.flash("success", "Uspjesno ste sacuvali novog korisnika!");
+        req.flash("success", "Uspješno ste sačuvali novog korisnika!");
         res.redirect('/stores');
     }
     catch (e) {
@@ -28,7 +28,7 @@ module.exports.renderLogin = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    req.flash("success", "Dobrodosli nazad!");
+    req.flash("success", "Dobrodošli nazad!");
     const redirectUrl = req.session.returnTo || '/stores';
     delete req.session.returnTo;
     res.redirect(redirectUrl)

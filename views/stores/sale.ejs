@@ -9,7 +9,7 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <p>Prodaja ID: <%= sale._id %></p>
-                <p><%= sale.date.getHours() %>:<%= sale.date.getMinutes() %>
+                <p><%= sale.date.getHours()<10? '0':'' %><%= sale.date.getHours() %>:<%= sale.date.getMinutes()<10? '0':'' %><%= sale.date.getMinutes() %>
                     <%= sale.date.getDate() %> <%= sale.date.toLocaleString('default', { month: 'long' }); %>
                     <%= sale.date.getFullYear() %>
                 </p>

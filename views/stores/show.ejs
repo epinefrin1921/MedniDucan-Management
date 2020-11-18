@@ -36,13 +36,13 @@
                 <% if(store.storeType==='store'){ %>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales/new">Nova prodaja</a>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales">Sve prodaje</a>
+                <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/sales/date">Odaberi datum</a>
                 <% } else if(store.storeType==='warehouse' && currentUser.isAdmin){ %>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/transfers/new">Novi prenos
                     proizvoda</a>
                 <a class="card-link btn btn-info mb-1" href="/stores/<%=store._id%>/transfers">Svi prenosi proizvoda</a>
                 <% } %>
                 <% if(currentUser.isAdmin){ %>
-
                 <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/edit">Uredi</a>
                 <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/addproducts">Dodaj proizvode</a>
                 <form class="d-inlineblock mt-1" action="/stores/<%=store._id%>?_method=DELETE" method="POST">

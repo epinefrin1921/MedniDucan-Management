@@ -8,7 +8,7 @@ const { isLoggedIn, isAdmin } = require('../middleware');
 
 router.route('/register')
     .get(isLoggedIn, isAdmin, users.renderRegister)
-    .post(catchAsync(users.register))
+    .post(isLoggedIn, catchAsync(users.register))
 
 router.route('/login')
     .get(users.renderLogin)

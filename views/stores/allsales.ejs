@@ -3,21 +3,51 @@
 
 <div class="row">
     <h2>
-        <h5 class="card-title">Prodaje iz radnje <%= store.name%></h5>
+        <h5 class="card-title">Prodaje iz radnje <%= store.name%> u mjesecu
+            <%= date.toLocaleString('default', { month: 'long' }); %> </h3>
+        </h5>
     </h2>
     <div class="col-12">
-        <ul class="list-group">
-            <% for(let sale of sales){ %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="/stores/<%= store._id %>/sales/<%= sale._id %>">Prodaja ID: <%= sale._id %></a>
-                <p><%= sale.date.getHours() %>:<%= sale.date.getMinutes() %>
+        <% for(let i=0; i<31; i++){ 
+                    let totalDan = 0;
+                    %>
+        <% if(date.getDate()-i>0){ %>
 
-                    <%= sale.date.getDate() %> <%= sale.date.toLocaleString('default', { month: 'long' }); %>
-                    <%= sale.date.getFullYear() %>
+        <h4 class="mt-4 mb-4">Prodaje na dan <%= date.getDate()-i %>.
+            <%= date.toLocaleString('default', { month: 'long' }); %> </h4>
+        <ul class="list-group">
+            <% for(let sale of sales.reverse()){ %>
+            <% if(sale.date.getFullYear() === date.getFullYear()
+                        && sale.date.getMonth() === date.getMonth()
+                        && sale.date.getDate() === date.getDate()-i
+                        ){ %>
+            <% 
+                            let total = 0;
+                            for(let item of sale.products){
+                                total = total + parseInt(item.price)*parseInt(item.quantity);
+                            };
+                            %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <p>Vrijeme:
+                    <%= sale.date.getHours()<10? '0':'' %><%= sale.date.getHours() %>:<%= sale.date.getMinutes()<10? '0':'' %><%= sale.date.getMinutes() %>
+                <p> Ukupno: <%= total %>KM </p>
+                <% 
+                            totalDan += total;
+                        %>
                 </p>
-                <span class="badge bg-primary rounded-pill">Prodao: <%= sale.author.username %> </span>
+                <a href="/stores/<%= sale.store._id %>/sales/<%= sale._id %>">Pogledaj prodaju</a>
+                <span class="p-2 badge bg-primary rounded-pill">Prodao: <%= sale.author.username %> </span>
             </li>
-            <% } %>
+            <% }} %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h4>Ukupno za dan: <%= totalDan %>KM </h4>
+            </li>
         </ul>
+        <br>
+        <hr>
+        <br>
+        <% }} %>
+
+        <a href="/sales">Pogledaj sve prodaje</a>
     </div>
 </div>

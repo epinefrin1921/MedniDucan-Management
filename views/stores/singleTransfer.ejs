@@ -11,7 +11,7 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <p>Transfer ID: <%= transfer._id %></p>
-                <p><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes() %>
+                <p><%= transfer.date.getHours()<10? '0':'' %><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes()<10? '0':'' %><%= transfer.date.getMinutes() %>
                     <%= transfer.date.getDate() %> <%= transfer.date.toLocaleString('default', { month: 'long' }); %>
                     <%= transfer.date.getFullYear() %>
                 </p>

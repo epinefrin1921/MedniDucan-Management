@@ -151,7 +151,7 @@ app.use('/sales', isLoggedIn, salesRoutes);
 app.get("/", function (req, res) {
   res.render('home.ejs');
 })
-app.get("/map", async (req, res) => {
+app.get("/map", isLoggedIn, async (req, res) => {
   const stores = await Store.find({})
   res.render('map.ejs', { stores });
 })

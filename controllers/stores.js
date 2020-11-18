@@ -94,14 +94,17 @@ module.exports.addProduct = async (req, res) => {
 
     for (let sproduct in newProducts) {
         let dodan = false;
+        if (!req.body.product[sproduct] > 0) {
+            req.body.product[sproduct] = 0;
+        }
         for (let item of trenutnoRadnja) {
-            if (item.productId.equals(sproduct) && req.body.product[sproduct] > 0) {
+            if (item.productId.equals(sproduct) && parseInt(req.body.product[sproduct]) !== 0) {
                 item.quantity = parseInt(item.quantity) + parseInt(req.body.product[sproduct]);
                 dodan = true;
             }
         }
 
-        if (req.body.product[sproduct] > 0 && !dodan) {
+        if (parseInt(req.body.product[sproduct]) !== 0 && !dodan) {
             const proizvod = {
                 productId: sproduct,
                 quantity: req.body.product[sproduct]
@@ -151,13 +154,14 @@ module.exports.addSale = async (req, res) => {
     sale.store = req.params.id;
     sale.author = req.user._id;
     await sale.save();
-    res.redirect(`/stores/${req.params.id}/sales`);
+    res.redirect(`/stores/${req.params.id}/sales/${sale._id}`);
 }
 
 module.exports.salesIndex = async (req, res) => {
     const store = await Store.findById(req.params.id);
     const sales = await Sale.find({ store: req.params.id }).populate('products.productId').populate('author');
-    res.render(`stores/allsales`, { sales, store });
+    date = new Date();
+    res.render(`stores/allsales`, { sales, store, date });
 }
 module.exports.singleSale = async (req, res) => {
     const store = await Store.findById(req.params.id);
@@ -238,4 +242,22 @@ module.exports.singleTransfer = async (req, res) => {
     const transfer = await Transfer.findById(req.params.transferId)
         .populate('products.productId').populate('author').populate('storeTo').populate('storeFrom');
     res.render(`stores/singleTransfer`, { transfer, store });
+}
+
+module.exports.pickDate = async (req, res) => {
+    const store = await Store.findById(req.params.id);
+    res.render('stores/salesdate', { store });
+}
+module.exports.renderSaleDate = async (req, res) => {
+    const store = await Store.findById(req.params.id);
+    const date = new Date(req.body.date);
+    const nextDay = new Date(req.body.date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    const sales = await Sale.find(
+        {
+            date: { "$gte": date, "$lt": nextDay },
+            store: store._id
+        }
+    ).populate('store').populate('products.productId').populate('author');
+    res.render('sales', { sales })
 }

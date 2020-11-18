@@ -9,8 +9,9 @@
         <ul class="list-group">
             <% for(let transfer of transfers){ %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="/stores/<%= store._id %>/transfers/<%= transfer._id %>">Transfer ID: <%= transfer._id %></a>
-                <p><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes() %>
+                <a href="/stores/<%= store._id %>/transfers/<%= transfer._id %>">Vidi transfer</a>
+                <p>Vrijeme:
+                    <%= transfer.date.getHours()<10? '0':'' %><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes()<10? '0':'' %><%= transfer.date.getMinutes() %>
 
                     <%= transfer.date.getDate() %> <%= transfer.date.toLocaleString('default', { month: 'long' }); %>
                     <%= transfer.date.getFullYear() %>
