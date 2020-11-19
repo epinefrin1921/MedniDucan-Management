@@ -15,3 +15,16 @@ module.exports.indexWeek = async (req, res) => {
     ).populate('store').populate('products.productId').populate('author');
     res.render('salesWeek', { sales, date });
 }
+
+
+module.exports.allstores = async (req, res) => {
+    const date = new Date(req.query.date);
+    const nextDay = new Date(req.query.date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    const sales = await Sales.find(
+        {
+            date: { "$gte": date, "$lt": nextDay }
+        }
+    ).populate('store').populate('products.productId').populate('author');
+    res.render('sales', { sales });
+}

@@ -2,8 +2,25 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Prodaje za prošlih 7 dana u mjesecu
-            <%= date.toLocaleString('default', { month: 'long' }); %> </h4>
+        <h3 class="text-center">Odaberi datum za provjeru rada svih radnji</h3>
+        <div class="col-md-6 offset-md-3 mb-5 mt-2">
+            <form action="/sales/allstores" method="GET" novalidate class="validated-form">
+
+                <div class="mb-3">
+                    <label class="form-label" for="date">Datum</label>
+                    <input class="form-control" type="date" id="date" name="date">
+                    <div class="valid-feedback">
+                        Izgleda dobro!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-success">Provjeri</button>
+                </div>
+            </form>
+        </div>
+        <h3 class="text-align">Prodaje za prošlih 7 dana u mjesecu
+            <%= date.toLocaleString('default', { month: 'long' }); %> </h3>
         <% for(let i=0; i<7; i++){ 
             let totalDan = 0;
             %>

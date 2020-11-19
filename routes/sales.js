@@ -13,5 +13,7 @@ router.route('/')
 router.route('/week')
     .get(isLoggedIn, catchAsync(sales.indexWeek))
 
+router.route('/allstores')
+    .get(isLoggedIn, catchAsync(sales.allstores));
 
 module.exports = router;
