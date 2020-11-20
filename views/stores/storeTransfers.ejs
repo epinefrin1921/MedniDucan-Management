@@ -9,15 +9,15 @@
         <ul class="list-group">
             <% for(let transfer of transfers){ %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="/stores/<%= store._id %>/transfers/<%= transfer._id %>">Vidi transfer</a>
-                <p>Vrijeme:
+                <a class="mr-3" href="/stores/<%= store._id %>/transfers/<%= transfer._id %>">Vidi transfer</a>
+                <p class="mr-3">Vrijeme:
                     <%= transfer.date.getHours()<10? '0':'' %><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes()<10? '0':'' %><%= transfer.date.getMinutes() %>
 
                     <%= transfer.date.getDate() %> <%= transfer.date.toLocaleString('default', { month: 'long' }); %>
                     <%= transfer.date.getFullYear() %>
                 </p>
-                <p>Prebačeno u <%= transfer.storeTo.name %></p>
-                <span class="badge bg-primary rounded-pill">Izvrsio: <%= transfer.author.username %> </span>
+                <p class="mr-3">Prebačeno u <%= transfer.storeTo.name %></p>
+                <p class="ml-3">Izvrsio: <%= transfer.author.username %> </p>
             </li>
             <% } %>
         </ul>

@@ -21,6 +21,7 @@
         </div>
         <h3 class="text-align">Prodaje za prošlih 7 dana u mjesecu
             <%= date.toLocaleString('default', { month: 'long' }); %> </h3>
+        <hr>
         <% for(let i=0; i<7; i++){ 
             let totalDan = 0;
             %>
@@ -40,16 +41,17 @@
                     };
                     %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p>Vrijeme:
+                <p class="mr-3">Vrijeme:
                     <%= sale.date.getHours()<10? '0':'' %><%= sale.date.getHours() %>:<%= sale.date.getMinutes()<10? '0':'' %><%= sale.date.getMinutes() %>
-                <p> Ukupno: <%= total %>KM </p>
+                    Prodao: <%= sale.author.username %>
+                </p>
+                <p class="mr-3"> Ukupno: <%= total %>KM </p>
                 <% 
                     totalDan += total;
                 %>
                 </p>
-                <p>Radnja: <%= sale.store.name %> </p>
-                <a href="/stores/<%= sale.store._id %>/sales/<%= sale._id %>">Pogledaj prodaju</a>
-                <span class="p-2 badge bg-primary rounded-pill">Prodao: <%= sale.author.username %> </span>
+                <p class="mr-3">Radnja: <%= sale.store.name %> </p>
+                <a class="ml-3" href="/stores/<%= sale.store._id %>/sales/<%= sale._id %>">Pogledaj prodaju</a>
             </li>
             <% }} %>
             <li class="list-group-item d-flex justify-content-between align-items-center">

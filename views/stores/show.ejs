@@ -45,7 +45,7 @@
                 <% if(currentUser.isAdmin){ %>
                 <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/edit">Uredi</a>
                 <a class="card-link btn btn-success mb-1" href="/stores/<%=store._id%>/addproducts">Dodaj proizvode</a>
-                <form class="d-inlineblock mt-1" action="/stores/<%=store._id%>?_method=DELETE" method="POST">
+                <form class="d-inline-block mt-1 ml-3" action="/stores/<%=store._id%>?_method=DELETE" method="POST">
                     <button class="card-link btn btn-danger">Izbriši</button>
                 </form>
                 <% } %>
@@ -63,13 +63,14 @@
     <h2>Stanje u <%= store.storeType==='store'? 'radnji': 'skladištu' %> </h2>
     <ul class="list-group">
         <% for(let product of store.products){ %>
+        <% if(product.productId !== null){ %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/products/<%= product.productId._id %>"><%= product.productId.name %></a>
             <% let stanje = product.quantity<5? 'danger':'warning'; if(product.quantity>10) stanje='success' ;%>
             <span class="badge bg-<%= stanje %> rounded-pill">Na stanju:
                 <%= product.quantity %></span>
         </li>
-        <% } %>
+        <% }} %>
     </ul>
 </div>
 

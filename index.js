@@ -28,7 +28,9 @@ const salesRoutes = require('./routes/sales')
 const Store = require('./models/stores');
 
 
-dbUrl = 'mongodb://localhost:27017/medniDucan';
+const dbUrl = process.env.DB_URL;
+// dbUrl = 'mongodb://localhost:27017/medniDucan';
+
 const secret = process.env.secret || 'ovojeprivremeno';
 
 const { isLoggedIn } = require('./middleware');

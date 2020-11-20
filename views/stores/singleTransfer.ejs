@@ -10,12 +10,13 @@
     <div class="col-12">
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p>Transfer ID: <%= transfer._id %></p>
-                <p><%= transfer.date.getHours()<10? '0':'' %><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes()<10? '0':'' %><%= transfer.date.getMinutes() %>
+                <p class="mr-3">Podaci: </p>
+                <p class="mr-3">
+                    <%= transfer.date.getHours()<10? '0':'' %><%= transfer.date.getHours() %>:<%= transfer.date.getMinutes()<10? '0':'' %><%= transfer.date.getMinutes() %>
                     <%= transfer.date.getDate() %> <%= transfer.date.toLocaleString('default', { month: 'long' }); %>
                     <%= transfer.date.getFullYear() %>
                 </p>
-                <span class="badge bg-primary rounded-pill">Izvršio: <%= transfer.author.username %> </span>
+                <p class="ml-3">Izvršio: <%= transfer.author.username %> </p>
             </li>
         </ul>
     </div>
@@ -23,9 +24,9 @@
     <% for(let item of transfer.products){ %>
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="/products/<%= item.productId._id %>"><%= item.productId.name %> </a>
-            <p>Količina: <%= item.quantity %></p>
-            <p>Ukupna cijena:
+            <a class="mr-3" href="/products/<%= item.productId._id %>"><%= item.productId.name %> </a>
+            <p class="mr-3">Količina: <%= item.quantity %></p>
+            <p class="ml-3">Ukupna cijena:
                 <%= parseInt(item.productId.price)*parseInt(item.quantity) %> </p>
             <% total = total + parseInt(item.productId.price)*parseInt(item.quantity); %>
         </li>

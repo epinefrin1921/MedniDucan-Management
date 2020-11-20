@@ -8,12 +8,14 @@
     <div class="col-12">
         <ul class="list-group">
             <% for(let order of orders){ %>
+
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p>Naručio: <%= order.author.username %></p>
-                <p> <%= order.store.name %> -
+                <p class="mr-4">Naručio: <%= order.author.username %></p>
+                <p class="mr-3"> <%= order.store!==null? order.store.name : 'izbrisana radnja'%>
+                    -
                     <%= order.dateDeliver.getDate() %>.<%= order.dateDeliver.getMonth()+1 %>.<%= order.dateDeliver.getFullYear() %>
                 </p>
-                <span class="badge bg-dark rounded-pill p-3">
+                <span class="badge bg-dark rounded-pill p-3 ml-2">
                     <a href="/orders/<%= order._id %> " style="color: white; text-decoration: none;">Pogledaj</a>
                 </span>
             </li>

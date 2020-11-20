@@ -26,7 +26,7 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/stores/<%= store._id %>"><%= store.name %></a>
             <% for(let item of store.products){ %>
-            <% if(item.productId._id.equals(product._id)){ %>
+            <% if(item.productId !== null &&  item.productId._id.equals(product._id)){ %>
             <% let stanje = item.quantity<5? 'danger':'warning'; if(item.quantity>10) stanje='info' ;%>
             <span class="badge bg-<%= stanje %> rounded-pill">
                 <%=  item.quantity%>
