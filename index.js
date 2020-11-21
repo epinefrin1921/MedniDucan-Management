@@ -29,7 +29,7 @@ const Store = require('./models/stores');
 
 
 const dbUrl = process.env.DB_URL;
-// dbUrl = 'mongodb://localhost:27017/medniDucan';
+// const dbUrl = 'mongodb://localhost:27017/medniDucan';
 
 const secret = process.env.secret || 'ovojeprivremeno';
 

@@ -16,4 +16,7 @@ router.route('/login')
 
 router.get('/logout', users.logout)
 
+router.route('/editprofile').get(isLoggedIn, users.renderEditForm)
+    .post(isLoggedIn, users.updateUser)
+
 module.exports = router;
