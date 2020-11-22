@@ -6,7 +6,7 @@
 
         <form action="/stores/<%= store._id %>/transfers?_method=PUT" method="POST" novalidate class="validated-form">
             <div class="mb-3 mt-4 form-group">
-                <select class="form-select" aria-label="Odaberi radnju" name="radnja" autofocus>
+                <select class="form-select" aria-label="Odaberi radnju" name="radnja" autofocus required>
                     <option selected disabled>Odaberi radnju ili skladiste</option>
                     <% for(let radnja of allStores){ %>
                     <% if(!radnja._id.equals(store._id)){ %>

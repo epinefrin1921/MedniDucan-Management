@@ -6,7 +6,7 @@
         <form action="/orders" method="POST" novalidate class="validated-form">
 
             <div class="mb-3 mt-4 form-group">
-                <select class="form-select" aria-label="Odaberi radnju" name="radnja">
+                <select class="form-select" aria-label="Odaberi radnju" name="radnja" required>
                     <option selected disabled>Odaberi radnju</option>
                     <% for(let radnja of stores){ %>
                     <% if(radnja.storeType === 'store'){ %>
@@ -31,7 +31,7 @@
 
             <div class="mb-3">
                 <label class="form-label" for="date">Datum narudžbe</label>
-                <input class="form-control" type="date" id="date" name="date">
+                <input class="form-control" type="date" id="date" name="date" required>
                 <div class="valid-feedback">
                     Izgleda dobro!
                 </div>

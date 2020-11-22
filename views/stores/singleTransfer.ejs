@@ -22,6 +22,7 @@
     </div>
     <h3 class="mt-5">Poslani proizvodi:</h3>
     <% for(let item of transfer.products){ %>
+    <% if(item.productId !== null){ %>
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a class="mr-3" href="/products/<%= item.productId._id %>"><%= item.productId.name %> </a>
@@ -31,7 +32,14 @@
             <% total = total + parseInt(item.productId.price)*parseInt(item.quantity); %>
         </li>
     </ul>
-    <% } %>
+    <% } else { %>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href=""> Izbrisani proizvod </a>
+            <p>Ovaj proizvod je izbrisan u bazi podataka </p>
+        </li>
+    </ul>
+    <% }} %>
     <h4 class="mb-3 mt-3">Ukupna cijena pošiljke: <%= total %>KM</h4>
 
     <div class="card" class="col-12 mb-3 mt-3">
